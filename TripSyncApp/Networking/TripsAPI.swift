@@ -3,8 +3,12 @@ import Foundation
 struct TripsAPI {
     private let client: APIClient
 
-    init(client: APIClient = try APIClient()) throws {
+    init(client: APIClient) {
         self.client = client
+    }
+
+    init() throws {
+        self.client = try APIClient()
     }
 
     func fetchTrips() async throws -> [TripCalendar] {

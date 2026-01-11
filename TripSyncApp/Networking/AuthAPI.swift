@@ -3,8 +3,12 @@ import Foundation
 struct AuthAPI {
     private let client: APIClient
 
-    init(client: APIClient = try APIClient()) throws {
+    init(client: APIClient) {
         self.client = client
+    }
+
+    init() throws {
+        self.client = try APIClient()
     }
 
     func login(usernameOrEmail: String, password: String) async throws -> User {
