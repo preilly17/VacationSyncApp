@@ -5,7 +5,8 @@ enum APIError: Error, LocalizedError {
     case invalidBaseURL(String)
     case invalidURL(String)
     case invalidResponse
-    case httpStatus(Int, Data)
+    case unauthorized(String?)
+    case httpStatus(Int, String?)
     case decoding(Error)
     case transport(Error)
 
@@ -19,7 +20,12 @@ enum APIError: Error, LocalizedError {
             return "Invalid URL path: \(path)."
         case .invalidResponse:
             return "Invalid response from server."
-        case .httpStatus(let statusCode, _):
+        case .unauthorized(let message):
+            return message ?? "Unauthorized."
+        case .httpStatus(let statusCode, let message):
+            if let message, !message.isEmpty {
+                return "Unexpected status code: \(statusCode). \(message)"
+            }
             return "Unexpected status code: \(statusCode)."
         case .decoding(let error):
             return "Failed to decode response: \(error.localizedDescription)."
