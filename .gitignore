@@ -1,0 +1,12 @@
+# Ralph state (never commit)
+.ralph/
+
+# Optional Ralph template overrides
+.agents/ralph/
+
+# macOS
+.DS_Store
+
+# Xcode user data
+xcuserdata/
+*.xcuserdatad

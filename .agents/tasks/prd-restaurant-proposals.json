@@ -1,0 +1,279 @@
+{
+  "documentType": "PRD",
+  "version": "1.0",
+  "id": "prd-restaurant-proposals",
+  "title": "Restaurant Proposal Functionality Parity",
+  "slug": "restaurant-proposals",
+  "createdAt": "2026-02-14",
+  "author": "codex",
+  "status": "draft",
+  "sourceRequest": "Proposal Functionality within the restaurants page of my app, that matches the functionality of the flight proposal currently built",
+  "summary": "Add proposal capabilities to the Restaurants page with behavioral parity to the existing Flight Proposal flow, so collaborators can create, view, vote on, and finalize restaurant options in the same collaboration model.",
+  "assumptions": [
+    "A flight proposal feature already exists in another part of the app and is considered the parity baseline.",
+    "Restaurants page exists or will exist as a feature surface where proposals are managed.",
+    "Trip collaborators and permissions model already exist and should be reused."
+  ],
+  "problemStatement": "Trip groups can currently coordinate flights via proposals but do not have an equivalent workflow for restaurants. This creates inconsistent collaboration patterns and forces restaurant decisions outside the app.",
+  "goals": [
+    "Enable users to create restaurant proposals from the Restaurants page.",
+    "Match the core end-to-end user experience and rules from Flight Proposal functionality.",
+    "Allow collaborators to evaluate proposals and converge on a selected restaurant.",
+    "Preserve auditability of decisions (who proposed, voted, commented, and finalized)."
+  ],
+  "nonGoals": [
+    "Building a restaurant recommendation engine.",
+    "Integrating new third-party providers beyond existing app capabilities.",
+    "Redesigning the global proposal framework beyond parity-required adaptation.",
+    "Implementing reservation booking flows."
+  ],
+  "users": [
+    {
+      "role": "Trip Owner",
+      "needs": [
+        "Create and finalize a restaurant proposal",
+        "Keep group decisions organized in-app"
+      ]
+    },
+    {
+      "role": "Trip Collaborator",
+      "needs": [
+        "Review options",
+        "Vote/comment",
+        "Understand final choice and rationale"
+      ]
+    }
+  ],
+  "scope": {
+    "inScope": [
+      "Restaurant proposal creation",
+      "Proposal list and detail views on Restaurants page",
+      "Voting/reaction parity with flight proposals",
+      "Commenting/discussion parity with flight proposals",
+      "Status lifecycle parity (e.g., open, selected, closed)",
+      "Permission parity with flight proposals",
+      "Notifications parity for proposal events"
+    ],
+    "outOfScope": [
+      "Restaurant booking integrations",
+      "Payment splitting",
+      "New collaboration primitives not present in flight proposals"
+    ]
+  },
+  "functionalRequirements": [
+    {
+      "id": "RFP-001",
+      "priority": "P0",
+      "name": "Create Restaurant Proposal",
+      "description": "Users with create permission can submit a proposal containing restaurant details equivalent in completeness to flight proposal inputs.",
+      "acceptanceCriteria": [
+        "Creation entry point is available in Restaurants page for authorized users.",
+        "Required fields follow flight proposal-level validation strictness adapted for restaurant data.",
+        "Successful creation is reflected immediately in proposal list and detail view."
+      ]
+    },
+    {
+      "id": "RFP-002",
+      "priority": "P0",
+      "name": "List Proposals",
+      "description": "Restaurants page shows all proposals for the trip with status and key metadata.",
+      "acceptanceCriteria": [
+        "List supports the same ordering/grouping behavior used by flight proposals.",
+        "Each row/card includes proposer, created time, status, and key restaurant summary.",
+        "Empty and loading states follow existing proposal UX conventions."
+      ]
+    },
+    {
+      "id": "RFP-003",
+      "priority": "P0",
+      "name": "Proposal Detail",
+      "description": "Users can open a restaurant proposal to view complete details and collaboration context.",
+      "acceptanceCriteria": [
+        "Detail screen exposes all submitted fields and current status.",
+        "Detail includes voting/reaction state and comments thread where parity exists.",
+        "Any edits/history visibility matches flight proposal behavior."
+      ]
+    },
+    {
+      "id": "RFP-004",
+      "priority": "P0",
+      "name": "Vote/React on Proposal",
+      "description": "Collaborators can express preference using the same interaction model as flight proposals.",
+      "acceptanceCriteria": [
+        "Allowed vote/reaction types and limits match flight proposal rules.",
+        "User can update/remove their own vote where flight parity allows.",
+        "Aggregated totals and user-specific state are consistently displayed."
+      ]
+    },
+    {
+      "id": "RFP-005",
+      "priority": "P0",
+      "name": "Comment and Discussion",
+      "description": "Collaborators can discuss each restaurant proposal in-context.",
+      "acceptanceCriteria": [
+        "Comment creation, display, and ordering follow flight proposal behavior.",
+        "Comment permissions align with trip collaborator permissions.",
+        "Failure handling and retries mirror existing proposal interaction patterns."
+      ]
+    },
+    {
+      "id": "RFP-006",
+      "priority": "P0",
+      "name": "Select/Finalize Proposal",
+      "description": "Authorized users can mark one restaurant proposal as selected/finalized under the same constraints used for flights.",
+      "acceptanceCriteria": [
+        "Finalize action is restricted to the same role set as flight proposals.",
+        "State transitions are validated to prevent conflicting final selections.",
+        "Finalized status is visible across list and detail surfaces."
+      ]
+    },
+    {
+      "id": "RFP-007",
+      "priority": "P1",
+      "name": "Notification Parity",
+      "description": "Proposal lifecycle events trigger the same classes of notifications used in flight proposals.",
+      "acceptanceCriteria": [
+        "Create, comment, vote, and finalize events notify relevant collaborators.",
+        "Notification content references restaurant context and trip.",
+        "Notification suppression/muting respects existing user settings."
+      ]
+    },
+    {
+      "id": "RFP-008",
+      "priority": "P1",
+      "name": "Permission and Visibility Parity",
+      "description": "Restaurant proposal visibility and actions follow existing trip and proposal permission policy.",
+      "acceptanceCriteria": [
+        "Unauthorized users cannot create, modify, or finalize proposals.",
+        "Read visibility aligns with current trip membership logic.",
+        "Error messaging for denied actions is consistent with existing patterns."
+      ]
+    }
+  ],
+  "parityRequirements": [
+    {
+      "flightCapability": "Proposal creation",
+      "restaurantParity": "Equivalent creation flow with restaurant-specific fields"
+    },
+    {
+      "flightCapability": "Proposal status lifecycle",
+      "restaurantParity": "Same lifecycle states and transition rules"
+    },
+    {
+      "flightCapability": "Voting/reactions",
+      "restaurantParity": "Same mechanics, limits, and visual state"
+    },
+    {
+      "flightCapability": "Comments/discussion",
+      "restaurantParity": "Same thread behavior and permissions"
+    },
+    {
+      "flightCapability": "Final selection",
+      "restaurantParity": "Same authorization and conflict handling"
+    },
+    {
+      "flightCapability": "Notifications",
+      "restaurantParity": "Same trigger categories and delivery rules"
+    }
+  ],
+  "dataRequirements": {
+    "proposalEntity": [
+      "proposalId",
+      "tripId",
+      "createdByUserId",
+      "createdAt",
+      "updatedAt",
+      "status",
+      "restaurantName",
+      "locationText",
+      "priceLevel",
+      "cuisineTags",
+      "notes"
+    ],
+    "collaborationEntity": [
+      "votesOrReactions",
+      "comments",
+      "finalizedByUserId",
+      "finalizedAt"
+    ],
+    "consistency": [
+      "Field naming and lifecycle semantics should align with existing proposal domain model where possible"
+    ]
+  },
+  "nonFunctionalRequirements": [
+    "Proposal actions should feel as responsive as flight proposal actions under normal network conditions.",
+    "Error handling must provide recoverable user feedback for failed create/vote/comment/finalize actions.",
+    "Accessibility baseline should match existing proposal surfaces (readable labels, dynamic type compatibility, voiceover support where already implemented)."
+  ],
+  "analytics": {
+    "events": [
+      "restaurant_proposal_created",
+      "restaurant_proposal_viewed",
+      "restaurant_proposal_voted",
+      "restaurant_proposal_commented",
+      "restaurant_proposal_finalized"
+    ],
+    "dimensions": [
+      "trip_id",
+      "proposal_id",
+      "user_role",
+      "status",
+      "collaborator_count"
+    ]
+  },
+  "successMetrics": [
+    {
+      "name": "Restaurant Proposal Adoption",
+      "definition": "% of active trips with at least one restaurant proposal",
+      "target": ">= 40% within 60 days of release"
+    },
+    {
+      "name": "Decision Completion Rate",
+      "definition": "% of trips with restaurant proposals that finalize at least one option",
+      "target": ">= 70% within 60 days"
+    },
+    {
+      "name": "Engagement Depth",
+      "definition": "Average collaborators participating (vote/comment) per restaurant proposal",
+      "target": ">= 2 collaborators"
+    }
+  ],
+  "edgeCases": [
+    "Proposal finalized while another collaborator is actively voting/commenting.",
+    "Trip membership changes after proposal creation.",
+    "Restaurant proposal references stale or incomplete location details.",
+    "Network interruption during finalize action causing uncertain state."
+  ],
+  "dependencies": [
+    "Existing trip membership and permission services",
+    "Existing proposal interaction primitives (votes/comments/status)",
+    "Existing notification pipeline",
+    "Restaurants page navigation and UI container"
+  ],
+  "risks": [
+    {
+      "risk": "Flight proposal behavior is undocumented or diverges from assumptions.",
+      "mitigation": "Run parity audit against production flight flow before implementation."
+    },
+    {
+      "risk": "Inconsistent permissions between features could allow unintended actions.",
+      "mitigation": "Reuse shared authorization checks and add parity-focused tests."
+    },
+    {
+      "risk": "Users may expect reservation support once restaurant is finalized.",
+      "mitigation": "Clarify in UI copy that finalization is a planning decision, not booking."
+    }
+  ],
+  "openQuestions": [
+    "What exact fields are mandatory for a flight proposal, and which map to restaurant context?",
+    "Should only one restaurant proposal be finalizable per day/meal, or one per trip section?",
+    "Do we need meal-type scoping (breakfast/lunch/dinner) in v1 to match real planning patterns?",
+    "Are notification channels (push/in-app/email) identical to flight proposals for launch?"
+  ],
+  "releaseCriteria": [
+    "All P0 requirements implemented with parity verification against flight proposal behavior.",
+    "No blocker or critical defects in create, vote/comment, finalize flows.",
+    "Analytics events validated in staging.",
+    "Product sign-off confirms parity goals are met."
+  ]
+}
